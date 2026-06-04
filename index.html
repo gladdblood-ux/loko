@@ -67,13 +67,19 @@
             background: transparent; border: none; color: #fff; font-size: 20px; cursor: pointer; padding: 4px 8px; display: none;
         }
         .search-bar-wrapper {
-            background: #303134; border-radius: 28px; padding: 10px 18px;
+            background: #303134; border-radius: 28px; padding: 10px 14px;
             display: flex; align-items: center; flex: 1;
         }
         .search-bar-wrapper input {
-            background: transparent; border: none; color: #e8eaed; font-size: 16px; width: 100%; outline: none; margin-left: 12px;
+            background: transparent; border: none; color: #e8eaed; font-size: 15px; width: 100%; outline: none; margin-left: 8px;
         }
         
+        /* Header Profile Circle Trigger */
+        .header-avatar {
+            width: 34px; height: 34px; border-radius: 50%; object-fit: cover;
+            background: #5f6368; border: 2px solid #00a173; cursor: pointer;
+        }
+
         .category-slider { display: flex; gap: 8px; padding: 14px 16px 4px 16px; overflow-x: auto; }
         .category-slider::-webkit-scrollbar { display: none; }
         .chip {
@@ -113,14 +119,51 @@
         .btn-main-install { background: #00a173; color: #fff; border: none; padding: 14px; font-size: 15px; font-weight: 500; border-radius: 100px; cursor: pointer; text-align: center; width: 100%; box-sizing: border-box; }
         .btn-sec-obb { background: #303134; color: #8ab4f8; border: none; padding: 14px; font-size: 15px; font-weight: 500; border-radius: 100px; cursor: pointer; text-align: center; width: 100%; box-sizing: border-box; }
         
-        .description-box { margin-bottom: 20px; }
+        .description-box { margin-bottom: 24px; }
         .desc-title { font-size: 16px; font-weight: 500; color: #fff; margin-bottom: 8px; }
         .desc-body { font-size: 14px; color: #9aa0a6; line-height: 1.5; }
         
         .password-banner { background: rgba(241, 139, 139, 0.1); border-left: 4px solid #ea4335; padding: 12px; border-radius: 4px; margin-bottom: 20px; font-size: 13px; color: #ff8a80; font-family: monospace; }
         
-        /* Logout Link Style */
-        .logout-link { font-size: 12px; color: #ea4335; cursor: pointer; padding: 4px 8px; margin-left: auto; font-weight: 500; }
+        /* MODERN COMMENT SYSTEM STYLES */
+        .comment-section { border-top: 1px solid #303134; padding-top: 20px; margin-top: 20px; }
+        .comment-box-header { font-size: 16px; font-weight: 500; color: #fff; margin-bottom: 16px; }
+        .comment-input-row { display: flex; gap: 12px; margin-bottom: 20px; align-items: flex-start; }
+        .user-comment-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; background: #444; }
+        .comment-field-wrapper { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .comment-field-wrapper textarea {
+            width: 100%; background: transparent; border: none; border-bottom: 1px solid #5f6368;
+            color: #fff; font-size: 14px; font-family: inherit; outline: none; resize: none; padding-bottom: 4px;
+        }
+        .comment-field-wrapper textarea:focus { border-bottom-color: #00a173; }
+        .btn-comment-submit {
+            align-self: flex-end; background: #00a173; color: #fff; border: none;
+            padding: 6px 16px; border-radius: 100px; font-size: 13px; font-weight: 500; cursor: pointer;
+        }
+        .comments-list { display: flex; flex-direction: column; gap: 16px; }
+        .single-comment { display: flex; gap: 12px; background: rgba(255,255,255,0.02); padding: 10px; border-radius: 12px; }
+        .comment-meta { display: flex; flex-direction: column; flex: 1; }
+        .comment-author-name { font-size: 13px; font-weight: 500; color: #fff; margin-bottom: 2px; }
+        .comment-text { font-size: 13px; color: #bdc1c6; line-height: 1.4; }
+
+        /* PROFILE INTERFACE LAYER */
+        #profile-view-layer { padding: 24px 16px; text-align: center; }
+        .profile-setup-avatar {
+            width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
+            background: #303134; border: 3px solid #00a173; margin: 0 auto 12px auto; display: block;
+        }
+        .upload-trigger-btn {
+            background: #303134; color: #8ab4f8; font-size: 13px; padding: 6px 14px;
+            border-radius: 100px; display: inline-block; cursor: pointer; margin-bottom: 30px; border: 1px solid #5f6368;
+        }
+        .profile-save-btn {
+            background: #00a173; color: #fff; width: 100%; max-width: 260px; padding: 12px;
+            border: none; border-radius: 100px; font-size: 15px; font-weight: 500; cursor: pointer; margin-top: 20px;
+        }
+        .danger-logout-btn {
+            background: transparent; color: #ea4335; font-size: 13px; border: 1px solid #ea4335;
+            padding: 8px 16px; border-radius: 100px; cursor: pointer; display: inline-block; margin-top: 40px;
+        }
 
         .hidden { display: none !important; }
     </style>
@@ -146,8 +189,8 @@
             </div>
             <div class="auth-title">Sign in</div>
             <div class="auth-subtitle">to continue to LokoStore</div>
-            <div class="input-group"><input type="text" id="login-user" placeholder="Username or email"></div>
-            <div class="input-group"><input type="password" id="login-pass" placeholder="Enter your password"></div>
+            <div class="input-group"><input type="text" id="login-user" placeholder="Username"></div>
+            <div class="input-group"><input type="password" id="login-pass" placeholder="Enter password"></div>
             <button class="btn-auth" onclick="handleLogin()">Next</button>
             <div class="auth-toggle" onclick="toggleAuthPanel('signup')">Create account</div>
         </div>
@@ -165,7 +208,7 @@
             <div class="auth-title">Create account</div>
             <div class="auth-subtitle">Get access to unlimited game mods</div>
             <div class="input-group"><input type="text" id="reg-user" placeholder="Choose a username"></div>
-            <div class="input-group"><input type="password" id="reg-pass" placeholder="Create a strong password"></div>
+            <div class="input-group"><input type="password" id="reg-pass" placeholder="Create a password"></div>
             <button class="btn-auth" onclick="handleSignUp()">Create</button>
             <div class="auth-toggle" onclick="toggleAuthPanel('login')">Sign in instead</div>
         </div>
@@ -175,13 +218,15 @@
     <div id="main-content" class="hidden">
         <!-- PlayStore Header & Navigation -->
         <div class="store-header">
-            <button class="back-btn" id="header-back-arrow" onclick="closeDetailsPage()">⬅</button>
+            <button class="back-btn" id="header-back-arrow" onclick="goBackRouter()">⬅</button>
+            
             <div class="search-bar-wrapper" id="search-box-container">
                 <span style="color:#9aa0a6; font-size: 18px;">🔍</span>
                 <input type="text" id="search-input" placeholder="Search for apps & games" onkeyup="filterApps()">
             </div>
-            <div id="page-title-label" style="font-size: 18px; font-weight: 500; display: none;">App details</div>
-            <div id="logout-btn-container" class="logout-link" onclick="handleLogout()">Log out</div>
+            
+            <div id="page-title-label" style="font-size: 18px; font-weight: 500; display: none; flex: 1;">App details</div>
+            <img class="header-avatar" id="trigger-profile-img" src="https://www.w3schools.com/howto/img_avatar.png" onclick="openProfilePage()">
         </div>
 
         <!-- HOME PAGE LAYER -->
@@ -246,26 +291,52 @@
                     <div class="stat-lbl">Downloads</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-val" id="target-size">Rated 3+</div>
+                    <div class="stat-val" id="target-size">Size</div>
                     <div class="stat-lbl">Size</div>
                 </div>
             </div>
 
-            <div class="password-banner" id="target-pw">
-                🔑 PASSWORD: NONE
-            </div>
+            <div class="password-banner" id="target-pw">🔑 PASSWORD: NONE</div>
 
             <div class="details-btn-group">
-                <button id="target-btn-apk" onclick="" class="btn-main-install">Install APK</button>
-                <button id="target-btn-obb" onclick="" class="btn-sec-obb">Download OBB Data</button>
+                <button id="target-btn-apk" class="btn-main-install">Install APK</button>
+                <button id="target-btn-obb" class="btn-sec-obb">Download OBB Data</button>
             </div>
 
             <div class="description-box">
                 <div class="desc-title">About this game</div>
-                <div class="desc-body" id="target-desc">
-                    Experience elite basketball simulation updated directly for this season. Fully optimized for high-performance mobile devices with zero lag features built-in.
-                </div>
+                <div class="desc-body" id="target-desc">Game descriptions loaded here...</div>
             </div>
+
+            <!-- COMMENT INTERFACE MODULE -->
+            <div class="comment-section">
+                <div class="comment-box-header">Ratings and reviews</div>
+                <div class="comment-input-row">
+                    <img class="user-comment-avatar active-user-pfp" src="https://www.w3schools.com/howto/img_avatar.png">
+                    <div class="comment-field-wrapper">
+                        <textarea id="comment-text-input" rows="2" placeholder="Describe your experience..."></textarea>
+                        <button class="btn-comment-submit" onclick="submitComment()">Post</button>
+                    </div>
+                </div>
+                <!-- Target Container for user logs -->
+                <div class="comments-list" id="comments-render-target"></div>
+            </div>
+        </div>
+
+        <!-- EDIT PROFILE LAYER -->
+        <div id="profile-view-layer" class="hidden">
+            <img class="profile-setup-avatar active-user-pfp" id="profile-edit-preview" src="https://www.w3schools.com/howto/img_avatar.png">
+            
+            <label for="pfp-file-uploader" class="upload-trigger-btn">Change Profile Picture</label>
+            <input type="file" id="pfp-file-uploader" accept="image/*" style="display: none;" onchange="previewAndCacheImage(this)">
+
+            <div class="input-group" style="max-width: 280px; margin: 0 auto 20px auto;">
+                <input type="text" id="edit-profile-username" placeholder="Edit Username" style="border: 1px solid #5f6368; background: #1e1e1e;">
+            </div>
+
+            <button class="profile-save-btn" onclick="saveProfileChanges()">Save Profile</button>
+            <br>
+            <button class="danger-logout-btn" onclick="handleLogout()">Log out Account</button>
         </div>
     </div>
 
@@ -276,204 +347,4 @@
                 title: "NBA 2K16 to 2K26",
                 img: "https://i.ibb.co/DfcbJ8Yj/image.png",
                 rating: "4.8★", size: "52 MB", pw: "SEMIUPDATEROSTER2026",
-                apk: "https://www.mediafire.com/file/o9v93av7hqcerqz/%25F0%259D%2599%25BD%25F0%259D%2599%25B1%25F0%259D%2599%25B02%25F0%259D%2599%25BA26_%25F0%259D%259A%25852_semi_update.zip/file",
-                obb: "https://www.mediafire.com/download/ep3y6u3ukvabsj7",
-                desc: "The massive roster transition modification project bringing full 2026 season aesthetics, courts, jerseys, and attribute tunings onto the ultra-fluid 2K16 mobile base engine."
-            },
-            2: {
-                title: "PBA2K Mobile",
-                img: "https://i.ibb.co/bgcCZxqb/image.png",
-                rating: "4.7★", size: "45 MB", pw: "PBA2K26",
-                apk: "https://www.mediafire.com/file/w53cu9fbd4re5wp/PBA2K.zip/file",
-                obb: "https://www.mediafire.com/download/ep3y6u3ukvabsj7",
-                desc: "Play with your favorite local Philippine Basketball Association teams! Featuring updated Governors Cup and Philippine Cup conferences, live stadium announcers, and realistic local pinoy player faces."
-            },
-            3: {
-                title: "Inter Barangay S1 (2K16)",
-                img: "https://i.ibb.co/DHWfzvkB/image.png",
-                rating: "4.9★", size: "120 MB", pw: "NO PASSWORD",
-                apk: "https://www.mediafire.com/file/sfwec64hp2fzokj/INTER_BARANGAY_S1_NO_PASSWORD.zip/file",
-                obb: "https://www.mediafire.com/download/ep3y6u3ukvabsj7",
-                desc: "Ang pinakahihintay na street basketball mod. Makipagbakbakan sa sementadong outdoor liga courts kasama ang mga sikat na local pure-street icons, custom uniform jerseys, at maingay na silya at ligang-labas crowd atmosphere."
-            },
-            4: {
-                title: "Inter Barangay S1 (2K20)",
-                img: "https://i.ibb.co/HpbcpFtj/image.png",
-                rating: "4.6★", size: "2.1 GB", pw: "ROADTO4KSUBS",
-                apk: "https://www.mediafire.com/file/ut0ue6o4blde4j7/INTER_BARANGAY.zip/file",
-                obb: "https://www.mediafire.com/file/lry7nfl00i2fc1f/com.t2ksports.nba2k20and.zip/file?fbclid=Iwb21leAR_yJJjbGNrAVhgyGV4dG4DYWVtAjExAAEdSVJBNqALRJ3p3C4ridVZnRPg0mpJF4bqY_PHNd5QtUqRjDi9ArpBCZrU_aem_V94ZHgtWIE62j9hN-4C5Bg",
-                desc: "Advanced next-generation graphics mod built over the definitive 2K20 mobile platform. Immersive game presentation with complete custom soundpacks, high-definition pinoy hoop courts, and refined custom animations."
-            },
-            5: {
-                title: "PBA2K26 Updated Import",
-                img: "https://i.ibb.co/mCmhD8Pm/image.png",
-                rating: "4.5★", size: "88 MB", pw: "LOKO2K",
-                apk: "https://www.mediafire.com/file/ot5js9l4u16xrj7/PBA2K26.zip/file",
-                obb: "https://www.mediafire.com/download/ep3y6u3ukvabsj7",
-                desc: "An exclusive add-on custom patch dataset delivering newly acquired foreign reinforcements, fresh import players, revised trade transfers, and fine-tuned accuracy ratings for the modern tactical setup."
-            }
-        };
-
-        // AUTO-LOGIN DETECTION ENGINE (Runs at startup)
-        window.addEventListener('DOMContentLoaded', () => {
-            // Check if user session data exists
-            const savedUser = localStorage.getItem('loko_user');
-            const savedStatus = localStorage.getItem('loko_isLoggedIn');
-
-            // Kung hindi pa nakapag-save ng kahit anong data sa app life, i-set ang default backup credentials
-            if (!localStorage.getItem('loko_saved_db_user')) {
-                localStorage.setItem('loko_saved_db_user', 'admin');
-                localStorage.setItem('loko_saved_db_pass', '1234');
-            }
-
-            setTimeout(() => {
-                if (savedStatus === 'true' && savedUser) {
-                    // Bypass login screens completely if already logged in previously
-                    bypassToStore();
-                } else {
-                    // If no active session, pop open the clean authentication screen
-                    document.getElementById('loading-overlay').classList.remove('active');
-                    document.getElementById('auth-container').classList.remove('hidden');
-                }
-            }, 1200);
-        });
-
-        function bypassToStore() {
-            document.getElementById('auth-container').classList.add('hidden');
-            document.getElementById('main-content').classList.remove('hidden');
-            document.getElementById('loading-overlay').classList.remove('active');
-        }
-
-        // Router Engines
-        function openDetailsPage(appId) {
-            showLoader();
-            const item = appDatabase[appId];
-            
-            document.getElementById('target-icon').src = item.img;
-            document.getElementById('target-title').innerText = item.title;
-            document.getElementById('target-stars').innerText = item.rating;
-            document.getElementById('target-size').innerText = item.size;
-            document.getElementById('target-pw').innerText = "🔑 PASSWORD: " + item.pw;
-            document.getElementById('target-desc').innerText = item.desc;
-            
-            document.getElementById('target-btn-apk').setAttribute('onclick', `triggerDownload('${item.apk}')`);
-            document.getElementById('target-btn-obb').setAttribute('onclick', `triggerDownload('${item.obb}')`);
-
-            document.getElementById('home-view-layer').classList.add('hidden');
-            document.getElementById('search-box-container').classList.add('hidden');
-            document.getElementById('logout-btn-container').classList.add('hidden');
-            
-            document.getElementById('header-back-arrow').style.display = "block";
-            document.getElementById('page-title-label').style.display = "block";
-            document.getElementById('details-content').classList.remove('hidden');
-            window.scrollTo(0,0);
-        }
-
-        function closeDetailsPage() {
-            document.getElementById('details-content').classList.add('hidden');
-            document.getElementById('header-back-arrow').style.display = "none";
-            document.getElementById('page-title-label').style.display = "none";
-
-            document.getElementById('home-view-layer').classList.remove('hidden');
-            document.getElementById('search-box-container').classList.remove('hidden');
-            document.getElementById('logout-btn-container').classList.remove('hidden');
-        }
-
-        function toggleAuthPanel(panel) {
-            if(panel === 'signup') {
-                document.getElementById('login-box').classList.add('hidden');
-                document.getElementById('signup-box').classList.remove('hidden');
-            } else {
-                document.getElementById('signup-box').classList.add('hidden');
-                document.getElementById('login-box').classList.remove('hidden');
-            }
-        }
-
-        // Persistent Sign Up System
-        function handleSignUp() {
-            const u = document.getElementById('reg-user').value.trim();
-            const p = document.getElementById('reg-pass').value.trim();
-            if(u === "" || p === "") { alert("Please fill in all fields."); return; }
-            
-            // Permanent storage mapping for new identities
-            localStorage.setItem('loko_saved_db_user', u);
-            localStorage.setItem('loko_saved_db_pass', p);
-            
-            showLoader();
-            setTimeout(() => { 
-                alert("Account created successfully! You can now log in."); 
-                toggleAuthPanel('login'); 
-            }, 800);
-        }
-
-        // Secure Login & Key matching System
-        function handleLogin() {
-            const u = document.getElementById('login-user').value.trim();
-            const p = document.getElementById('login-pass').value.trim();
-            
-            // Pull registered records out of phone memory database
-            const registeredUser = localStorage.getItem('loko_saved_db_user');
-            const registeredPass = localStorage.getItem('loko_saved_db_pass');
-
-            if(u === registeredUser && p === registeredPass) {
-                // LOCK-IN SESSION: Itatago natin 'to sa storage para auto-login na sa susunod
-                localStorage.setItem('loko_user', u);
-                localStorage.setItem('loko_isLoggedIn', 'true');
-
-                showLoader();
-                setTimeout(() => {
-                    bypassToStore();
-                }, 1000);
-            } else { 
-                alert("Wrong username or password. Please try again."); 
-            }
-        }
-
-        // Manual Logout System (In case gusto nila magpalit ng user identity)
-        function handleLogout() {
-            if(confirm("Are you sure you want to log out?")) {
-                localStorage.removeItem('loko_user');
-                localStorage.removeItem('loko_isLoggedIn');
-                showLoader();
-                setTimeout(() => {
-                    document.getElementById('main-content').classList.add('hidden');
-                    document.getElementById('auth-container').classList.remove('hidden');
-                }, 800);
-            }
-        }
-
-        function filterApps() {
-            const query = document.getElementById('search-input').value.toLowerCase();
-            const cards = document.getElementsByClassName('app-card');
-            for(let card of cards) {
-                const title = card.getAttribute('data-title');
-                card.style.display = title.includes(query) ? "" : "none";
-            }
-        }
-
-        function filterCategory(cat, element) {
-            const chips = document.getElementsByClassName('chip');
-            for(let c of chips) { c.classList.remove('active'); }
-            element.classList.add('active');
-            const cards = document.getElementsByClassName('app-card');
-            for(let card of cards) {
-                const itemCat = card.getAttribute('data-category');
-                card.style.display = (cat === 'all' || itemCat === cat) ? "" : "none";
-            }
-        }
-
-        function showLoader() {
-            const overlay = document.getElementById('loading-overlay');
-            overlay.classList.add('active');
-            setTimeout(() => { overlay.classList.remove('active'); }, 1000);
-        }
-
-        function triggerDownload(url) {
-            const overlay = document.getElementById('loading-overlay');
-            overlay.classList.add('active');
-            window.location.href = url;
-            setTimeout(() => { overlay.classList.remove('active'); }, 2000);
-        }
-    </script>
-</body>
-</html>
+                apk: "https://www.mediafire.com/file/o9v93av7hqcerqz/%25F0%259D%2599%25BD%25F0%259D%2599%25B1%25F0%259D%2599%25B02%25F0%259D%2599%25BA26_%25F0%25
