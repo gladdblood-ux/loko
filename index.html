@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loko2K Store Hub</title>
+    <style>
+        body { 
+            background-color: #020204; 
+            color: #ffffff; 
+            font-family: 'Courier New', Courier, monospace; 
+            margin: 0; 
+            padding-bottom: 30px;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: " "; display: block; position: fixed; top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 85, 0.02), rgba(0, 255, 102, 0.01), rgba(0, 229, 255, 0.02));
+            z-index: 99999; background-size: 100% 4px, 4px 100%; pointer-events: none;
+        }
+        .store-header {
+            padding: 20px 15px;
+            background: #050508;
+            border-bottom: 1px solid #111;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .store-title { font-size: 24px; font-weight: 900; color: #00ff66; text-shadow: 0 0 10px rgba(0,255,102,0.3); }
+        .store-subtitle { font-size: 10px; color: #ff0055; letter-spacing: 1px; margin-top: 3px; }
+        .app-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 15px;
+        }
+        .app-card { 
+            background: #050508; 
+            padding: 12px; 
+            border-radius: 8px; 
+            position: relative;
+            border: 1px solid rgba(255, 0, 85, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .app-card::before {
+            content: ''; position: absolute; top: -1px; left: -1px; width: 12px; height: 12px;
+            border-top: 2px solid #ff0055; border-left: 2px solid #ff0055;
+        }
+        .app-thumbnail { 
+            width: 100%; 
+            height: 110px; 
+            border-radius: 6px; 
+            object-fit: cover; 
+            border: 1px solid #00e5ff;
+            margin-bottom: 8px;
+        }
+        .app-title { font-size: 13px; font-weight: 900; color: #ffffff; line-height: 1.2; height: 32px; overflow: hidden; }
+        .key-badge { font-size: 8px; background: rgba(255,0,85,0.1); color: #ff0055; padding: 3px 6px; border-radius: 3px; border: 1px dashed #ff0055; display: inline-block; margin-bottom: 8px; text-transform: uppercase; }
+        .btn-dl { 
+            width: 100%; color: #fff; border: none; padding: 10px 0; border-radius: 4px; 
+            font-weight: 900; cursor: pointer; font-size: 11px; letter-spacing: 1px; 
+            font-family: monospace; text-transform: uppercase; margin-top: 4px;
+        }
+        .btn-apk { background: #ff0055; box-shadow: 0 0 10px rgba(255,0,85,0.3); }
+        .btn-obb { background: #00e5ff; color: #000; box-shadow: 0 0 10px rgba(0,229,255,0.3); }
+        #loading-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #010102; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; z-index: 9999; 
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        #loading-overlay.active { opacity: 1; pointer-events: auto; }
+        .radar-hub { position: relative; width: 80px; height: 80px; }
+        .radar-sweep { position: absolute; width: 100%; height: 100%; border: 2px solid transparent; border-top-color: #00ff66; border-left-color: #00ff66; border-radius: 50%; animation: spin 0.6s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        #auth-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #020203; display: flex; justify-content: center; align-items: center; z-index: 9990; padding: 20px;
+        }
+        .auth-box { background: #050508; border: 1px solid #ff0055; padding: 30px 20px; border-radius: 8px; width: 100%; max-width: 280px; text-align: center; }
+        .btn-auth { width: 100%; background: #00ff66; color: black; font-weight: 900; padding: 12px; border: none; font-family: monospace; cursor: pointer; letter-spacing: 1px; margin-top: 20px; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div id="loading-overlay">
+        <div class="radar-hub"><div class="radar-sweep"></div></div>
+        <div style="color: #00ff66; margin-top: 20px; font-size: 11px; letter-spacing: 2px;">CONNECTING TO DOWNLINK NODE...</div>
+    </div>
+
+    <div id="auth-container">
+        <div class="auth-box">
+            <div style="font-size: 40px; margin-bottom: 10px;">⚡</div>
+            <div style="font-size: 20px; font-weight: 900; color: #ff0055;">LOKO2K CORE</div>
+            <div style="font-size: 9px; color: #555; margin-top: 5px;">// BYPASSING SECURE PROTOCOLS</div>
+            <button class="btn-auth" onclick="initAccess()">LAUNCH STORE HUB</button>
+        </div>
+    </div>
+
+    <div id="main-content" class="hidden">
+        <div class="store-header">
+            <div class="store-title">LOKO2K APPS</div>
+            <div class="store-subtitle">// OFFICIAL MOD HUB v2.0</div>
+        </div>
+
+        <div class="app-grid">
+            <!-- Mod 1 -->
+            <div class="app-card">
+                <div>
+                    <img class="app-thumbnail" src="https://i.ibb.co/DfcbJ8Yj/image.png">
+                    <div class="app-title">NBA 2K16 to 2K26</div>
+                    <div class="key-badge">PW: SEMIUPDATEROSTER2026</div>
+                </div>
+                <div>
+                    <button onclick="triggerDownload('https://www.mediafire.com/file/o9v93av7hqcerqz/%25F0%259D%2599%25BD%25F0%259D%2599%25B1%25F0%259D%2599%25B02%25F0%259D%2599%25BA26_%25F0%259D%259A%25852_semi_update.zip/file')" class="btn-dl btn-apk">GET APK</button>
+                    <button onclick="triggerDownload('https://www.mediafire.com/download/ep3y6u3ukvabsj7')" class="btn-dl btn-obb">GET OBB</button>
+                </div>
+            </div>
+
+            <!-- Mod 2 -->
+            <div class="app-card">
+                <div>
+                    <img class="app-thumbnail" src="https://i.ibb.co/bgcCZxqb/image.png">
+                    <div class="app-title">PBA2K Mobile</div>
+                    <div class="key-badge">PW: PBA2K26</div>
+                </div>
+                <div>
+                    <button onclick="triggerDownload('https://www.mediafire.com/file/w53cu9fbd4re5wp/PBA2K.zip/file')" class="btn-dl btn-apk">GET APK</button>
+                    <button onclick="triggerDownload('https://www.mediafire.com/download/ep3y6u3ukvabsj7')" class="btn-dl btn-obb">GET OBB</button>
+                </div>
+            </div>
+
+            <!-- Mod 3 -->
+            <div class="app-card">
+                <div>
+                    <img class="app-thumbnail" src="https://i.ibb.co/DHWfzvkB/image.png">
+                    <div class="app-title">Inter Barangay S1 (2K16)</div>
+                    <div class="key-badge">PW: NO PASSWORD</div>
+                </div>
+                <div>
+                    <button onclick="triggerDownload('https://www.mediafire.com/file/sfwec64hp2fzokj/INTER_BARANGAY_S1_NO_PASSWORD.zip/file')" class="btn-dl btn-apk">GET APK</button>
+                    <button onclick="triggerDownload('https://www.mediafire.com/download/ep3y6u3ukvabsj7')" class="btn-dl btn-obb">GET OBB</button>
+                </div>
+            </div>
+
+            <!-- Mod 4 -->
+            <div class="app-card">
+                <div>
+                    <img class="app-thumbnail" src="https://i.ibb.co/HpbcpFtj/image.png">
+                    <div class="app-title">Inter Barangay S1 (2K20)</div>
+                    <div class="key-badge">PW: ROADTO4KSUBS</div>
+                </div>
+                <div>
+                    <button onclick="triggerDownload('https://www.mediafire.com/file/ut0ue6o4blde4j7/INTER_BARANGAY.zip/file')" class="btn-dl btn-apk">GET APK</button>
+                    <button onclick="triggerDownload('https://www.mediafire.com/file/lry7nfl00i2fc1f/com.t2ksports.nba2k20and.zip/file?fbclid=Iwb21leAR_yJJjbGNrAVhgyGV4dG4DYWVtAjExAAEdSVJBNqALRJ3p3C4ridVZnRPg0mpJF4bqY_PHNd5QtUqRjDi9ArpBCZrU_aem_V94ZHgtWIE62j9hN-4C5Bg')" class="btn-dl btn-obb">GET OBB</button>
+                </div>
+            </div>
+
+            <!-- Mod 5 -->
+            <div class="app-card">
+                <div>
+                    <img class="app-thumbnail" src="https://i.ibb.co/mCmhD8Pm/image.png">
+                    <div class="app-title">PBA2K26 Updated Import</div>
+                    <div class="key-badge">PW: LOKO2K</div>
+                </div>
+                <div>
+                    <button onclick="triggerDownload('https://www.mediafire.com/file/ot5js9l4u16xrj7/PBA2K26.zip/file')" class="btn-dl btn-apk">GET APK</button>
+                    <button onclick="triggerDownload('https://www.mediafire.com/download/ep3y6u3ukvabsj7')" class="btn-dl btn-obb">GET OBB</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function initAccess() {
+            const overlay = document.getElementById('loading-overlay');
+            overlay.classList.add('active');
+            setTimeout(() => {
+                overlay.classList.remove('active');
+                document.getElementById('auth-container').classList.add('hidden');
+                document.getElementById('main-content').classList.remove('hidden');
+            }, 1200);
+        }
+        function triggerDownload(url) {
+            const overlay = document.getElementById('loading-overlay');
+            overlay.classList.add('active');
+            window.location.href = url;
+            setTimeout(() => { overlay.classList.remove('active'); }, 2500);
+        }
+    </script>
+</body>
+</html>
